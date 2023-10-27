@@ -1,0 +1,33 @@
+{
+    "name": "tasque/event-loop",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Tasque\\EventLoop\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tasque\\EventLoop\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": ">=8.1",
+        "react/event-loop": "1.x-dev",
+        "tasque/tasque": "dev-main"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.6",
+        "phpstan/phpstan": "^1.10",
+        "phpstan/phpstan-mockery": "^1.1",
+        "phpunit/phpunit": "^10.2"
+    },
+    "config": {
+        "platform": {
+            "php": "8.1"
+        },
+        "sort-packages": true
+    },
+    "minimum-stability": "dev"
+}
