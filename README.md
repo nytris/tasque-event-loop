@@ -1,4 +1,4 @@
-# Tasque EventLoop.
+# Tasque EventLoop
 
 [![Build Status](https://github.com/nytris/tasque-event-loop/workflows/CI/badge.svg)](https://github.com/nytris/tasque-event-loop/actions?query=workflow%3ACI)
 
