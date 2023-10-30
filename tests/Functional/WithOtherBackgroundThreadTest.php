@@ -13,13 +13,15 @@ declare(strict_types=1);
 
 namespace Tasque\EventLoop\Tests\Functional;
 
-use Nytris\Core\Package\PackageConfigInterface;
+use Nytris\Core\Package\PackageContextInterface;
 use Tasque\Core\Scheduler\ContextSwitch\NTockStrategy;
 use Tasque\EventLoop\TasqueEventLoop;
+use Tasque\EventLoop\TasqueEventLoopPackageInterface;
 use Tasque\EventLoop\Tests\AbstractTestCase;
 use Tasque\EventLoop\Tests\Functional\Harness\Log;
 use Tasque\EventLoop\Tests\Functional\Harness\WithOtherBackgroundThread\MainThread;
 use Tasque\Tasque;
+use Tasque\TasquePackageInterface;
 
 /**
  * Class WithOtherBackgroundThreadTest.
@@ -39,9 +41,13 @@ class WithOtherBackgroundThreadTest extends AbstractTestCase
 
     public function setUp(): void
     {
-        Tasque::setSchedulerStrategy(new NTockStrategy(1));
-        Tasque::install(mock(PackageConfigInterface::class));
-        TasqueEventLoop::install(mock(PackageConfigInterface::class));
+        Tasque::install(mock(PackageContextInterface::class), mock(TasquePackageInterface::class, [
+            'getSchedulerStrategy' => new NTockStrategy(1),
+        ]));
+        TasqueEventLoop::install(
+            mock(PackageContextInterface::class),
+            mock(TasqueEventLoopPackageInterface::class)
+        );
 
         $this->log = new Log();
         $this->tasque = new Tasque();

@@ -26,12 +26,13 @@ declare(strict_types=1);
 
 use Nytris\Boot\BootConfig;
 use Nytris\Boot\PlatformConfig;
-use Tasque\Tasque;
+use Tasque\EventLoop\TasqueEventLoopPackage;
+use Tasque\TasquePackage;
 
 $bootConfig = new BootConfig(new PlatformConfig(__DIR__ . '/var/cache/nytris/'));
 
-$bootConfig->installPackage(Tasque::class);
-$bootConfig->installPackage(TasqueEventLoop::class);
+$bootConfig->installPackage(new TasquePackage());
+$bootConfig->installPackage(new TasqueEventLoopPackage());
 
 return $bootConfig;
 ```

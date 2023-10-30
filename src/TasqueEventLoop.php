@@ -13,9 +13,8 @@ declare(strict_types=1);
 
 namespace Tasque\EventLoop;
 
-use Asmblah\PhpCodeShift\Shifter\Filter\FileFilter;
-use Composer\InstalledVersions;
-use Nytris\Core\Package\PackageConfigInterface;
+use Nytris\Core\Package\PackageContextInterface;
+use Nytris\Core\Package\PackageInterface;
 use React\EventLoop\Loop;
 use Tasque\Tasque;
 
@@ -49,14 +48,11 @@ class TasqueEventLoop implements TasqueEventLoopInterface
     /**
      * @inheritDoc
      */
-    public static function install(PackageConfigInterface $packageConfig): void
+    public static function install(PackageContextInterface $packageContext, PackageInterface $package): void
     {
         self::$installed = true;
 
-        $tasque = new Tasque();
-
-        $reactEventLoopInstallPath = realpath(InstalledVersions::getInstallPath('react/event-loop'));
-        $tasque->excludeFiles(new FileFilter($reactEventLoopInstallPath . '/**'));
+        Tasque::excludeComposerPackage('react/event-loop');
 
         /*
          * Install a ReactPHP EventLoop future tick handler that invokes the Tasque tock hook.
@@ -85,6 +81,8 @@ class TasqueEventLoop implements TasqueEventLoopInterface
         };
 
         Loop::futureTick($tickTock);
+
+        $tasque = new Tasque();
 
         // Run the ReactPHP event loop itself inside a Tasque green thread.
         $eventLoopThread = $tasque->createThread(function () {

@@ -13,15 +13,15 @@ declare(strict_types=1);
 
 namespace Tasque\EventLoop;
 
-use Nytris\Core\Package\PackageFacadeInterface;
+use Nytris\Core\Package\PackageInterface;
 
 /**
- * Interface TasqueEventLoopInterface.
+ * Interface TasqueEventLoopPackageInterface.
  *
- * Defines the public facade API for the library.
+ * Configures the installation of Tasque EventLoop.
  *
  * @author Dan Phillimore <dan@ovms.co>
  */
-interface TasqueEventLoopInterface extends PackageFacadeInterface
+interface TasqueEventLoopPackageInterface extends PackageInterface
 {
 }
