@@ -15,7 +15,7 @@
     "require": {
         "php": ">=8.1",
         "react/event-loop": "1.x-dev",
-        "tasque/tasque": "dev-main"
+        "tasque/tasque": "^0.1"
     },
     "require-dev": {
         "mockery/mockery": "^1.6",
