@@ -107,16 +107,16 @@
         },
         {
             "name": "nytris/nytris",
-            "version": "v0.1.0",
+            "version": "v0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nytris/nytris.git",
-                "reference": "f6af9e604b2b6606cf95a322d3eecca6e829ae1e"
+                "reference": "a75be5d81bc181c22a71b3e01a40c45b0d152ab5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nytris/nytris/zipball/f6af9e604b2b6606cf95a322d3eecca6e829ae1e",
-                "reference": "f6af9e604b2b6606cf95a322d3eecca6e829ae1e",
+                "url": "https://api.github.com/repos/nytris/nytris/zipball/a75be5d81bc181c22a71b3e01a40c45b0d152ab5",
+                "reference": "a75be5d81bc181c22a71b3e01a40c45b0d152ab5",
                 "shasum": ""
             },
             "require": {
@@ -143,9 +143,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nytris/nytris/issues",
-                "source": "https://github.com/nytris/nytris/tree/v0.1.0"
+                "source": "https://github.com/nytris/nytris/tree/v0.1.1"
             },
-            "time": "2023-11-05T09:21:06+00:00"
+            "time": "2023-11-07T07:18:09+00:00"
         },
         {
             "name": "react/event-loop",
@@ -222,16 +222,16 @@
         },
         {
             "name": "tasque/tasque",
-            "version": "v0.1.0",
+            "version": "v0.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nytris/tasque.git",
-                "reference": "c8d4b0f44dcdcb415b406872e9a1c468d70c8695"
+                "reference": "771597aeb6fd38da4d8ff3afee79abbd878ed54c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nytris/tasque/zipball/c8d4b0f44dcdcb415b406872e9a1c468d70c8695",
-                "reference": "c8d4b0f44dcdcb415b406872e9a1c468d70c8695",
+                "url": "https://api.github.com/repos/nytris/tasque/zipball/771597aeb6fd38da4d8ff3afee79abbd878ed54c",
+                "reference": "771597aeb6fd38da4d8ff3afee79abbd878ed54c",
                 "shasum": ""
             },
             "require": {
@@ -257,9 +257,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nytris/tasque/issues",
-                "source": "https://github.com/nytris/tasque/tree/v0.1.0"
+                "source": "https://github.com/nytris/tasque/tree/v0.1.2"
             },
-            "time": "2023-11-05T10:21:19+00:00"
+            "time": "2023-11-07T07:19:57+00:00"
         }
     ],
     "packages-dev": [
@@ -583,12 +583,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "a894ee65af8c8aab3111c5ba901bc7daf0f87e69"
+                "reference": "d6bc3d67e3d6b8f3ba09d8cc58aaa896bb1f0e33"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/a894ee65af8c8aab3111c5ba901bc7daf0f87e69",
-                "reference": "a894ee65af8c8aab3111c5ba901bc7daf0f87e69",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d6bc3d67e3d6b8f3ba09d8cc58aaa896bb1f0e33",
+                "reference": "d6bc3d67e3d6b8f3ba09d8cc58aaa896bb1f0e33",
                 "shasum": ""
             },
             "require": {
@@ -638,7 +638,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-11-04T17:11:22+00:00"
+            "time": "2023-11-06T17:28:28+00:00"
         },
         {
             "name": "phpstan/phpstan-mockery",

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Tasque\EventLoop;
 
 use Nytris\Core\Package\PackageFacadeInterface;
+use Tasque\Core\Thread\Control\ExternalControlInterface;
 
 /**
  * Interface TasqueEventLoopInterface.
@@ -24,4 +25,8 @@ use Nytris\Core\Package\PackageFacadeInterface;
  */
 interface TasqueEventLoopInterface extends PackageFacadeInterface
 {
+    /**
+     * Fetches the Tasque thread that is running the ReactPHP event loop.
+     */
+    public static function getEventLoopThread(): ExternalControlInterface;
 }

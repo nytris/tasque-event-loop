@@ -13,9 +13,11 @@ declare(strict_types=1);
 
 namespace Tasque\EventLoop;
 
+use LogicException;
 use Nytris\Core\Package\PackageContextInterface;
 use Nytris\Core\Package\PackageInterface;
 use React\EventLoop\Loop;
+use Tasque\Core\Thread\Control\ExternalControlInterface;
 use Tasque\Tasque;
 
 /**
@@ -28,6 +30,7 @@ use Tasque\Tasque;
 class TasqueEventLoop implements TasqueEventLoopInterface
 {
     private static bool $installed = false;
+    private static ?ExternalControlInterface $eventLoopThread = null;
 
     /**
      * @inheritDoc
@@ -48,10 +51,25 @@ class TasqueEventLoop implements TasqueEventLoopInterface
     /**
      * @inheritDoc
      */
+    public static function getEventLoopThread(): ExternalControlInterface
+    {
+        if (self::$eventLoopThread === null) {
+            throw new LogicException(
+                'Event loop thread is not set - did you forget to install this package in nytris.config.php?'
+            );
+        }
+
+        return self::$eventLoopThread;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public static function install(PackageContextInterface $packageContext, PackageInterface $package): void
     {
         self::$installed = true;
 
+        // Don't tock-ify the ReactPHP event loop logic itself for efficiency.
         Tasque::excludeComposerPackage('react/event-loop');
 
         /*
@@ -85,11 +103,22 @@ class TasqueEventLoop implements TasqueEventLoopInterface
         $tasque = new Tasque();
 
         // Run the ReactPHP event loop itself inside a Tasque green thread.
-        $eventLoopThread = $tasque->createThread(function () {
+        self::$eventLoopThread = $tasque->createThread(function () {
             Loop::run();
         });
 
-        $eventLoopThread->start();
+        // Propagate any Throwables from the event loop up to the main thread.
+        self::$eventLoopThread->shout();
+
+        self::$eventLoopThread->start();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function isInstalled(): bool
+    {
+        return self::$installed;
     }
 
     /**
@@ -97,6 +126,7 @@ class TasqueEventLoop implements TasqueEventLoopInterface
      */
     public static function uninstall(): void
     {
+        self::$eventLoopThread = null;
         self::$installed = false;
     }
 }
