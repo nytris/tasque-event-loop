@@ -222,16 +222,16 @@
         },
         {
             "name": "tasque/tasque",
-            "version": "v0.1.2",
+            "version": "v0.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nytris/tasque.git",
-                "reference": "771597aeb6fd38da4d8ff3afee79abbd878ed54c"
+                "reference": "69b2e3a8c61642c9a12d67183b26486180cbbca7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nytris/tasque/zipball/771597aeb6fd38da4d8ff3afee79abbd878ed54c",
-                "reference": "771597aeb6fd38da4d8ff3afee79abbd878ed54c",
+                "url": "https://api.github.com/repos/nytris/tasque/zipball/69b2e3a8c61642c9a12d67183b26486180cbbca7",
+                "reference": "69b2e3a8c61642c9a12d67183b26486180cbbca7",
                 "shasum": ""
             },
             "require": {
@@ -257,9 +257,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nytris/tasque/issues",
-                "source": "https://github.com/nytris/tasque/tree/v0.1.2"
+                "source": "https://github.com/nytris/tasque/tree/v0.1.3"
             },
-            "time": "2023-11-07T07:19:57+00:00"
+            "time": "2023-11-07T18:20:53+00:00"
         }
     ],
     "packages-dev": [
