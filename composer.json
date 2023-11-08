@@ -14,7 +14,7 @@
     },
     "require": {
         "php": ">=8.1",
-        "react/event-loop": "1.x-dev",
+        "react/event-loop": "^1.4",
         "tasque/tasque": "^0.1"
     },
     "require-dev": {

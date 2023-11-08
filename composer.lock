@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3e025115b3db6dd78e337bef7f4997ea",
+    "content-hash": "891971627d66d67fa392f7b34d79118f",
     "packages": [
         {
             "name": "asmblah/php-code-shift",
@@ -149,16 +149,16 @@
         },
         {
             "name": "react/event-loop",
-            "version": "1.x-dev",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/event-loop.git",
-                "reference": "3b5a7899f66d47b88212e2f8a1112dcee2c95eba"
+                "reference": "6e7e587714fff7a83dcc7025aee42ab3b265ae05"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/event-loop/zipball/3b5a7899f66d47b88212e2f8a1112dcee2c95eba",
-                "reference": "3b5a7899f66d47b88212e2f8a1112dcee2c95eba",
+                "url": "https://api.github.com/repos/reactphp/event-loop/zipball/6e7e587714fff7a83dcc7025aee42ab3b265ae05",
+                "reference": "6e7e587714fff7a83dcc7025aee42ab3b265ae05",
                 "shasum": ""
             },
             "require": {
@@ -170,7 +170,6 @@
             "suggest": {
                 "ext-pcntl": "For signal handling support when using the StreamSelectLoop"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -210,7 +209,7 @@
             ],
             "support": {
                 "issues": "https://github.com/reactphp/event-loop/issues",
-                "source": "https://github.com/reactphp/event-loop/tree/1.x"
+                "source": "https://github.com/reactphp/event-loop/tree/v1.4.0"
             },
             "funding": [
                 {
@@ -218,7 +217,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2023-10-28T08:43:48+00:00"
+            "time": "2023-05-05T10:11:24+00:00"
         },
         {
             "name": "tasque/tasque",
@@ -2071,9 +2070,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "react/event-loop": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
