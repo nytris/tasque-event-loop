@@ -57,6 +57,24 @@ Loop::addPeriodicTimer(1, function () {
 });
 ```
 
+### Awaiting a ReactPHP promise from a thread
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use Tasque\EventLoop\TasqueEventLoop;
+
+/*
+ * This will cause the current thread (which may be the main thread
+ * as well as a background thread) to pause until the promise is resolved,
+ * in which case the result will be returned, or rejected, in which case
+ * the reason will be thrown.
+ */
+$result = TasqueEventLoop::await($promise);
+```
+
 ## See also
 - [Tasque][1]
 - [ReactPHP][2]
