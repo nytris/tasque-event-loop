@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b428138695ce7cbe42df7c9137d19a55",
+    "content-hash": "eb89d25dbfa26a4430b9b2cf775c3f89",
     "packages": [
         {
             "name": "asmblah/php-code-shift",
@@ -271,6 +271,79 @@
                 }
             ],
             "time": "2023-11-13T13:48:05+00:00"
+        },
+        {
+            "name": "react/promise",
+            "version": "v3.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reactphp/promise.git",
+                "reference": "8a164643313c71354582dc850b42b33fa12a4b63"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reactphp/promise/zipball/8a164643313c71354582dc850b42b33fa12a4b63",
+                "reference": "8a164643313c71354582dc850b42b33fa12a4b63",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "1.10.39 || 1.4.10",
+                "phpunit/phpunit": "^9.6 || ^7.5"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/functions_include.php"
+                ],
+                "psr-4": {
+                    "React\\Promise\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Sorgalla",
+                    "email": "jsorgalla@gmail.com",
+                    "homepage": "https://sorgalla.com/"
+                },
+                {
+                    "name": "Christian Lück",
+                    "email": "christian@clue.engineering",
+                    "homepage": "https://clue.engineering/"
+                },
+                {
+                    "name": "Cees-Jan Kiewiet",
+                    "email": "reactphp@ceesjankiewiet.nl",
+                    "homepage": "https://wyrihaximus.net/"
+                },
+                {
+                    "name": "Chris Boden",
+                    "email": "cboden@gmail.com",
+                    "homepage": "https://cboden.dev/"
+                }
+            ],
+            "description": "A lightweight implementation of CommonJS Promises/A for PHP",
+            "keywords": [
+                "promise",
+                "promises"
+            ],
+            "support": {
+                "issues": "https://github.com/reactphp/promise/issues",
+                "source": "https://github.com/reactphp/promise/tree/v3.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://opencollective.com/reactphp",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2024-05-24T10:39:05+00:00"
         },
         {
             "name": "symfony/filesystem",
@@ -580,16 +653,16 @@
         },
         {
             "name": "tasque/tasque",
-            "version": "v0.1.6",
+            "version": "v0.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nytris/tasque.git",
-                "reference": "16541db9298ff99329004a56c4569ad8a03b2059"
+                "reference": "83eb5a1523388edf78ec395137b729fc18cc79a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nytris/tasque/zipball/16541db9298ff99329004a56c4569ad8a03b2059",
-                "reference": "16541db9298ff99329004a56c4569ad8a03b2059",
+                "url": "https://api.github.com/repos/nytris/tasque/zipball/83eb5a1523388edf78ec395137b729fc18cc79a8",
+                "reference": "83eb5a1523388edf78ec395137b729fc18cc79a8",
                 "shasum": ""
             },
             "require": {
@@ -619,9 +692,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nytris/tasque/issues",
-                "source": "https://github.com/nytris/tasque/tree/v0.1.6"
+                "source": "https://github.com/nytris/tasque/tree/v0.1.7"
             },
-            "time": "2024-08-01T23:02:29+00:00"
+            "time": "2024-08-08T00:10:38+00:00"
         }
     ],
     "packages-dev": [

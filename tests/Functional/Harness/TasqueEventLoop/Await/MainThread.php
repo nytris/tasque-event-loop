@@ -11,9 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Tasque\EventLoop\Tests\Functional\Harness\WithOtherBackgroundThread;
+namespace Tasque\EventLoop\Tests\Functional\Harness\TasqueEventLoop\Await;
 
 use React\EventLoop\Loop;
+use React\Promise\Promise;
+use Tasque\EventLoop\TasqueEventLoop;
 use Tasque\EventLoop\Tests\Functional\Harness\Log;
 use Tasque\EventLoop\Tests\Functional\Harness\SimpleBackgroundThread;
 use Tasque\TasqueInterface;
@@ -21,7 +23,7 @@ use Tasque\TasqueInterface;
 /**
  * Class MainThread.
  *
- * Used by WithOtherBackgroundThreadTest.
+ * Used by TasqueEventLoop\Await\WithOtherBackgroundThreadTest.
  *
  * @author Dan Phillimore <dan@ovms.co>
  */
@@ -55,6 +57,21 @@ class MainThread
         $this->log->log('Before background thread start');
         $backgroundThread->start();
         $this->log->log('After background thread start');
+
+        $this->log->log('Before promise await');
+        /*
+         * Await a promise synchronously within this main thread until it is resolved,
+         * while allowing other threads to continue.
+         *
+         * Resolve the promise after one ReactPHP event loop tick.
+         */
+        TasqueEventLoop::await(new Promise(function (callable $resolve, callable $reject) {
+            Loop::futureTick(function () use ($resolve) {
+                $this->log->log('Resolving promise');
+                $resolve(null);
+            });
+        }));
+        $this->log->log('After promise await');
 
         $this->log->log('Before writing to stream');
         fwrite($stream, 'My data');

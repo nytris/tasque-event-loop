@@ -17,8 +17,11 @@ use LogicException;
 use Mockery\MockInterface;
 use Nytris\Core\Package\PackageContextInterface;
 use Nytris\Core\Package\PackageInterface;
+use React\Promise\PromiseInterface;
 use Tasque\Core\Thread\Control\ExternalControlInterface;
+use Tasque\EventLoop\Library\LibraryInterface;
 use Tasque\EventLoop\TasqueEventLoop;
+use Tasque\EventLoop\TasqueEventLoopPackageInterface;
 use Tasque\EventLoop\Tests\AbstractTestCase;
 use Tasque\Tasque;
 use Tasque\TasquePackageInterface;
@@ -37,7 +40,7 @@ class TasqueEventLoopTest extends AbstractTestCase
 
     public function setUp(): void
     {
-        $this->eventLoopPackage = mock(PackageInterface::class);
+        $this->eventLoopPackage = mock(TasqueEventLoopPackageInterface::class);
         $this->eventLoopPackageContext = mock(PackageContextInterface::class);
         $this->tasquePackage = mock(TasquePackageInterface::class, [
             'getSchedulerStrategy' => null,
@@ -58,11 +61,36 @@ class TasqueEventLoopTest extends AbstractTestCase
         static::assertSame('event-loop', TasqueEventLoop::getName());
     }
 
+    public function testAwaitRaisesExceptionWhenPackageNotLoaded(): void
+    {
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage(
+            'Library is not installed - did you forget to install this package in nytris.config.php?'
+        );
+
+        TasqueEventLoop::await(mock(PromiseInterface::class));
+    }
+
+    public function testAwaitInvokesAwaitOnTheLibrary(): void
+    {
+        $library = mock(LibraryInterface::class, [
+            'uninstall' => null
+        ]);
+        TasqueEventLoop::setLibrary($library);
+        $promise = mock(PromiseInterface::class);
+
+        $library->expects()
+            ->await($promise)
+            ->once();
+
+        TasqueEventLoop::await($promise);
+    }
+
     public function testGetEventLoopThreadRaisesExceptionWhenPackageNotLoaded(): void
     {
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage(
-            'Event loop thread is not set - did you forget to install this package in nytris.config.php?'
+            'Library is not installed - did you forget to install this package in nytris.config.php?'
         );
 
         TasqueEventLoop::getEventLoopThread();

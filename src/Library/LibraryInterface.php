@@ -11,21 +11,19 @@
 
 declare(strict_types=1);
 
-namespace Tasque\EventLoop;
+namespace Tasque\EventLoop\Library;
 
-use Nytris\Core\Package\PackageFacadeInterface;
 use React\Promise\PromiseInterface;
 use Tasque\Core\Thread\Control\ExternalControlInterface;
-use Tasque\EventLoop\Library\LibraryInterface;
 
 /**
- * Interface TasqueEventLoopInterface.
+ * Interface LibraryInterface.
  *
- * Defines the public facade API for the library.
+ * Encapsulates an installation of the library.
  *
  * @author Dan Phillimore <dan@ovms.co>
  */
-interface TasqueEventLoopInterface extends PackageFacadeInterface
+interface LibraryInterface
 {
     /**
      * Awaits the given ReactPHP promise within the current thread,
@@ -38,20 +36,20 @@ interface TasqueEventLoopInterface extends PackageFacadeInterface
      * @param PromiseInterface<T> $promise
      * @return T
      */
-    public static function await(PromiseInterface $promise): mixed;
+    public function await(PromiseInterface $promise): mixed;
 
     /**
      * Fetches the Tasque thread that is running the ReactPHP event loop.
      */
-    public static function getEventLoopThread(): ExternalControlInterface;
+    public function getEventLoopThread(): ExternalControlInterface;
 
     /**
-     * Fetches the current library installation.
+     * Determines whether the library is still installed.
      */
-    public static function getLibrary(): LibraryInterface;
+    public function isInstalled(): bool;
 
     /**
-     * Overrides the current library installation with the given one.
+     * Uninstalls this installation of the library.
      */
-    public static function setLibrary(LibraryInterface $library): void;
+    public function uninstall(): void;
 }

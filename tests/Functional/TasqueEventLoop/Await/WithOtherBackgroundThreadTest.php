@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Tasque\EventLoop\Tests\Functional;
+namespace Tasque\EventLoop\Tests\Functional\TasqueEventLoop\Await;
 
 use Nytris\Core\Package\PackageContextInterface;
 use Tasque\Core\Scheduler\ContextSwitch\NTockStrategy;
@@ -19,14 +19,15 @@ use Tasque\EventLoop\TasqueEventLoop;
 use Tasque\EventLoop\TasqueEventLoopPackageInterface;
 use Tasque\EventLoop\Tests\AbstractTestCase;
 use Tasque\EventLoop\Tests\Functional\Harness\Log;
-use Tasque\EventLoop\Tests\Functional\Harness\WithOtherBackgroundThread\MainThread;
+use Tasque\EventLoop\Tests\Functional\Harness\TasqueEventLoop\Await\MainThread;
 use Tasque\Tasque;
 use Tasque\TasquePackageInterface;
 
 /**
  * Class WithOtherBackgroundThreadTest.
  *
- * Tests the handling of multiple background threads:
+ * Tests the TasqueEventLoop::await(...) method with another background thread
+ * in addition to the ReactPHP event loop thread and main thread.
  *
  * - The main thread
  * - The Tasque EventLoop thread
@@ -70,19 +71,24 @@ class WithOtherBackgroundThreadTest extends AbstractTestCase
                 'After adding read stream',
                 'Before background thread start',
                 'After background thread start',
-                'Before writing to stream',
+
+                'Before promise await',
                 'Start of background thread #1 run',
-                'After writing to stream',
-                'Before main thread loop',
                 'Background thread #1 loop iteration #0',
-                'Read stream received: "My data"',
-                'Main thread loop iteration #0',
                 'Background thread #1 loop iteration #1',
-                'Main thread loop iteration #1',
+                'Resolving promise',
                 'Background thread #1 loop iteration #2',
-                'Main thread loop iteration #2',
                 'Background thread #1 loop iteration #3',
                 'End of background thread #1 run',
+                'After promise await',
+
+                'Before writing to stream',
+                'After writing to stream',
+                'Before main thread loop',
+                'Main thread loop iteration #0',
+                'Main thread loop iteration #1',
+                'Read stream received: "My data"',
+                'Main thread loop iteration #2',
                 'Main thread loop iteration #3',
                 'After main thread loop',
                 'Before join',

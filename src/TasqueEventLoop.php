@@ -13,11 +13,16 @@ declare(strict_types=1);
 
 namespace Tasque\EventLoop;
 
+use Asmblah\PhpCodeShift\Shifter\Filter\FileFilter;
+use InvalidArgumentException;
 use LogicException;
 use Nytris\Core\Package\PackageContextInterface;
 use Nytris\Core\Package\PackageInterface;
 use React\EventLoop\Loop;
+use React\Promise\PromiseInterface;
 use Tasque\Core\Thread\Control\ExternalControlInterface;
+use Tasque\EventLoop\Library\Library;
+use Tasque\EventLoop\Library\LibraryInterface;
 use Tasque\Tasque;
 
 /**
@@ -29,8 +34,49 @@ use Tasque\Tasque;
  */
 class TasqueEventLoop implements TasqueEventLoopInterface
 {
-    private static bool $installed = false;
-    private static ?ExternalControlInterface $eventLoopThread = null;
+    private static bool $bootstrapped = false;
+    private static ?LibraryInterface $library = null;
+
+    /**
+     * @inheritDoc
+     */
+    public static function await(PromiseInterface $promise): mixed
+    {
+        return self::getLibrary()->await($promise);
+    }
+
+    /**
+     * Bootstrapping only ever happens once, either via Composer's file-autoload mechanism
+     * or via TasqueEventLoop::install(...), whichever happens first.
+     */
+    public static function bootstrap(): void
+    {
+        if (self::$bootstrapped) {
+            return;
+        }
+
+        self::$bootstrapped = true;
+
+        // Don't tock-ify the ReactPHP event loop logic itself for efficiency.
+        Tasque::excludeComposerPackage('react/event-loop');
+
+        // Exclude Tasque EventLoop itself from having tock hooks applied.
+        Tasque::excludeFiles(new FileFilter(__DIR__ . '/**'));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getLibrary(): LibraryInterface
+    {
+        if (!self::$library) {
+            throw new LogicException(
+                'Library is not installed - did you forget to install this package in nytris.config.php?'
+            );
+        }
+
+        return self::$library;
+    }
 
     /**
      * @inheritDoc
@@ -53,13 +99,7 @@ class TasqueEventLoop implements TasqueEventLoopInterface
      */
     public static function getEventLoopThread(): ExternalControlInterface
     {
-        if (self::$eventLoopThread === null) {
-            throw new LogicException(
-                'Event loop thread is not set - did you forget to install this package in nytris.config.php?'
-            );
-        }
-
-        return self::$eventLoopThread;
+        return self::getLibrary()->getEventLoopThread();
     }
 
     /**
@@ -67,50 +107,24 @@ class TasqueEventLoop implements TasqueEventLoopInterface
      */
     public static function install(PackageContextInterface $packageContext, PackageInterface $package): void
     {
-        self::$installed = true;
+        if (!$package instanceof TasqueEventLoopPackageInterface) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'Package config must be a %s but it was a %s',
+                    TasqueEventLoopPackageInterface::class,
+                    $package::class
+                )
+            );
+        }
 
-        // Don't tock-ify the ReactPHP event loop logic itself for efficiency.
-        Tasque::excludeComposerPackage('react/event-loop');
-
-        /*
-         * Install a ReactPHP EventLoop future tick handler that invokes the Tasque tock hook.
-         *
-         * This ensures that the event loop is interrupted at least every tick to process tocks,
-         * preventing the event loop from blocking other Tasque threads.
-         * It also keeps the event loop alive indefinitely (unless it is explicitly stopped
-         * or this package is uninstalled).
-         */
-
-        $tickTock = static function () use (&$tickTock) {
-            if (self::$installed === false) {
-                return;
-            }
-
-            /*
-             * Invoke the Tasque scheduler to handle other green threads as applicable.
-             *
-             * Note that we do not call `Marshaller::tock()`, as depending on the scheduler strategy in use,
-             * a context switch may not happen for a while, which will waste resources
-             * if the event loop has no work to perform.
-             */
-            Tasque::switchContext();
-
-            Loop::futureTick($tickTock);
-        };
-
-        Loop::futureTick($tickTock);
+        self::bootstrap();
 
         $tasque = new Tasque();
 
         // Run the ReactPHP event loop itself inside a Tasque green thread.
-        self::$eventLoopThread = $tasque->createThread(function () {
+        self::$library = new Library($tasque->createThread(function () {
             Loop::run();
-        });
-
-        // Propagate any Throwables from the event loop up to the main thread.
-        self::$eventLoopThread->shout();
-
-        self::$eventLoopThread->start();
+        }));
     }
 
     /**
@@ -118,7 +132,19 @@ class TasqueEventLoop implements TasqueEventLoopInterface
      */
     public static function isInstalled(): bool
     {
-        return self::$installed;
+        return self::$library !== null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function setLibrary(LibraryInterface $library): void
+    {
+        if (self::$library !== null) {
+            self::$library->uninstall();
+        }
+
+        self::$library = $library;
     }
 
     /**
@@ -126,7 +152,12 @@ class TasqueEventLoop implements TasqueEventLoopInterface
      */
     public static function uninstall(): void
     {
-        self::$eventLoopThread = null;
-        self::$installed = false;
+        if (self::$library === null) {
+            // Not yet installed anyway; nothing to do.
+            return;
+        }
+
+        self::$library->uninstall();
+        self::$library = null;
     }
 }
