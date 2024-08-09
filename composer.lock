@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eb89d25dbfa26a4430b9b2cf775c3f89",
+    "content-hash": "2a56769b0dd4eb05a8cd2b02df783db5",
     "packages": [
         {
             "name": "asmblah/php-code-shift",
-            "version": "v0.1.13",
+            "version": "v0.1.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/asmblah/php-code-shift.git",
-                "reference": "330dcf687e9839440433625c2e6f0e3eac409213"
+                "reference": "b32ac845d623465385ad8f901c8e6b958ef33410"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/asmblah/php-code-shift/zipball/330dcf687e9839440433625c2e6f0e3eac409213",
-                "reference": "330dcf687e9839440433625c2e6f0e3eac409213",
+                "url": "https://api.github.com/repos/asmblah/php-code-shift/zipball/b32ac845d623465385ad8f901c8e6b958ef33410",
+                "reference": "b32ac845d623465385ad8f901c8e6b958ef33410",
                 "shasum": ""
             },
             "require": {
@@ -48,9 +48,9 @@
             ],
             "support": {
                 "issues": "https://github.com/asmblah/php-code-shift/issues",
-                "source": "https://github.com/asmblah/php-code-shift/tree/v0.1.13"
+                "source": "https://github.com/asmblah/php-code-shift/tree/v0.1.14"
             },
-            "time": "2024-07-18T11:25:28+00:00"
+            "time": "2024-08-08T06:36:42+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -653,16 +653,16 @@
         },
         {
             "name": "tasque/tasque",
-            "version": "v0.1.7",
+            "version": "v0.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nytris/tasque.git",
-                "reference": "83eb5a1523388edf78ec395137b729fc18cc79a8"
+                "reference": "283bc9b9f1cd46b565754f1cc1cdf1bc9637cc4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nytris/tasque/zipball/83eb5a1523388edf78ec395137b729fc18cc79a8",
-                "reference": "83eb5a1523388edf78ec395137b729fc18cc79a8",
+                "url": "https://api.github.com/repos/nytris/tasque/zipball/283bc9b9f1cd46b565754f1cc1cdf1bc9637cc4c",
+                "reference": "283bc9b9f1cd46b565754f1cc1cdf1bc9637cc4c",
                 "shasum": ""
             },
             "require": {
@@ -692,9 +692,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nytris/tasque/issues",
-                "source": "https://github.com/nytris/tasque/tree/v0.1.7"
+                "source": "https://github.com/nytris/tasque/tree/v0.1.8"
             },
-            "time": "2024-08-08T00:10:38+00:00"
+            "time": "2024-08-09T17:15:28+00:00"
         }
     ],
     "packages-dev": [
@@ -1012,16 +1012,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.11.9",
+            "version": "1.11.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "e370bcddadaede0c1716338b262346f40d296f82"
+                "reference": "640410b32995914bde3eed26fa89552f9c2c082f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/e370bcddadaede0c1716338b262346f40d296f82",
-                "reference": "e370bcddadaede0c1716338b262346f40d296f82",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/640410b32995914bde3eed26fa89552f9c2c082f",
+                "reference": "640410b32995914bde3eed26fa89552f9c2c082f",
                 "shasum": ""
             },
             "require": {
@@ -1066,7 +1066,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-08-01T16:25:18+00:00"
+            "time": "2024-08-08T09:02:50+00:00"
         },
         {
             "name": "phpstan/phpstan-mockery",

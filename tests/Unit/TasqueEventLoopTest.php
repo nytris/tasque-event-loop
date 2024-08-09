@@ -44,6 +44,7 @@ class TasqueEventLoopTest extends AbstractTestCase
         $this->eventLoopPackageContext = mock(PackageContextInterface::class);
         $this->tasquePackage = mock(TasquePackageInterface::class, [
             'getSchedulerStrategy' => null,
+            'isPreemptive' => true,
         ]);
         $this->tasquePackageContext = mock(PackageContextInterface::class);
 

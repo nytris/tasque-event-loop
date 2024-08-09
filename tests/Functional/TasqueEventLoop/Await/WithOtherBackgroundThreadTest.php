@@ -44,6 +44,7 @@ class WithOtherBackgroundThreadTest extends AbstractTestCase
     {
         Tasque::install(mock(PackageContextInterface::class), mock(TasquePackageInterface::class, [
             'getSchedulerStrategy' => new NTockStrategy(1),
+            'isPreemptive' => true,
         ]));
         TasqueEventLoop::install(
             mock(PackageContextInterface::class),
