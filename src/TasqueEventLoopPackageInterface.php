@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace Tasque\EventLoop;
 
 use Nytris\Core\Package\PackageInterface;
+use React\EventLoop\LoopInterface;
+use Tasque\EventLoop\ContextSwitch\SchedulerInterface;
 
 /**
  * Interface TasqueEventLoopPackageInterface.
@@ -24,4 +26,21 @@ use Nytris\Core\Package\PackageInterface;
  */
 interface TasqueEventLoopPackageInterface extends PackageInterface
 {
+    public const DEFAULT_CONTEXT_SWITCH_INTERVAL = 0.0005;
+
+    /**
+     * Fetches the interval in seconds to context switch away from the event loop
+     * to process other green threads.
+     */
+    public function getContextSwitchInterval(): float;
+
+    /**
+     * Fetches the context switch scheduler.
+     */
+    public function getContextSwitchScheduler(): SchedulerInterface;
+
+    /**
+     * Fetches the ReactPHP event loop to use, or null to use the default.
+     */
+    public function getEventLoop(): ?LoopInterface;
 }

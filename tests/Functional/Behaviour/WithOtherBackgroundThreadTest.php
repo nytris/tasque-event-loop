@@ -15,6 +15,7 @@ namespace Tasque\EventLoop\Tests\Functional\Behaviour;
 
 use Nytris\Core\Package\PackageContextInterface;
 use Tasque\Core\Scheduler\ContextSwitch\NTockStrategy;
+use Tasque\EventLoop\ContextSwitch\FutureTickScheduler;
 use Tasque\EventLoop\TasqueEventLoop;
 use Tasque\EventLoop\TasqueEventLoopPackageInterface;
 use Tasque\EventLoop\Tests\AbstractTestCase;
@@ -47,7 +48,12 @@ class WithOtherBackgroundThreadTest extends AbstractTestCase
         ]));
         TasqueEventLoop::install(
             mock(PackageContextInterface::class),
-            mock(TasqueEventLoopPackageInterface::class)
+            mock(TasqueEventLoopPackageInterface::class, [
+                'getContextSwitchInterval' => TasqueEventLoopPackageInterface::DEFAULT_CONTEXT_SWITCH_INTERVAL,
+                // Switch every tick to make tests deterministic.
+                'getContextSwitchScheduler' => new FutureTickScheduler(),
+                'getEventLoop' => null,
+            ])
         );
 
         $this->log = new Log();

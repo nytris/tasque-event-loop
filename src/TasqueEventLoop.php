@@ -19,6 +19,7 @@ use LogicException;
 use Nytris\Core\Package\PackageContextInterface;
 use Nytris\Core\Package\PackageInterface;
 use React\EventLoop\Loop;
+use React\EventLoop\LoopInterface;
 use React\Promise\PromiseInterface;
 use Tasque\Core\Thread\Control\ExternalControlInterface;
 use Tasque\EventLoop\Library\Library;
@@ -120,11 +121,18 @@ class TasqueEventLoop implements TasqueEventLoopInterface
         self::bootstrap();
 
         $tasque = new Tasque();
+        /** @var LoopInterface $eventLoop */
+        $eventLoop = $package->getEventLoop() ?? Loop::get();
 
         // Run the ReactPHP event loop itself inside a Tasque green thread.
-        self::$library = new Library($tasque->createThread(function () {
-            Loop::run();
-        }));
+        self::$library = new Library(
+            $tasque->createThread(function () use ($eventLoop) {
+                $eventLoop->run();
+            }),
+            $eventLoop,
+            $package->getContextSwitchInterval(),
+            $package->getContextSwitchScheduler()
+        );
     }
 
     /**

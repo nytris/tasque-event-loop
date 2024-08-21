@@ -13,9 +13,10 @@ declare(strict_types=1);
 
 namespace Tasque\EventLoop\Library;
 
-use React\EventLoop\Loop;
+use React\EventLoop\LoopInterface;
 use React\Promise\PromiseInterface;
 use Tasque\Core\Thread\Control\ExternalControlInterface;
+use Tasque\EventLoop\ContextSwitch\SchedulerInterface;
 use Tasque\Tasque;
 use Throwable;
 
@@ -31,18 +32,21 @@ class Library implements LibraryInterface
     private bool $installed = true;
 
     public function __construct(
-        private readonly ?ExternalControlInterface $eventLoopThread
+        private readonly ExternalControlInterface $eventLoopThread,
+        LoopInterface $eventLoop,
+        private readonly float $contextSwitchInterval,
+        SchedulerInterface $contextSwitchScheduler
     ) {
         /*
-         * Install a ReactPHP EventLoop future tick handler that switches the Tasque context.
+         * Set up a periodic event to switch the Tasque context away from the ReactPHP EventLoop.
          *
-         * This ensures that the event loop is interrupted at least every tick to process context switches,
+         * This ensures that the event loop is interrupted periodically to process context switches,
          * preventing the event loop from blocking other Tasque threads.
          * It also keeps the event loop alive indefinitely (unless it is explicitly stopped
          * or this package is uninstalled).
          */
 
-        $tickTock = function () use (&$tickTock) {
+        $tickTock = function () use ($contextSwitchScheduler, $eventLoop, &$tickTock) {
             if ($this->installed === false) {
                 return;
             }
@@ -56,10 +60,10 @@ class Library implements LibraryInterface
              */
             Tasque::switchContext();
 
-            Loop::futureTick($tickTock);
+            $contextSwitchScheduler->schedule($tickTock, $eventLoop, $this->contextSwitchInterval);
         };
 
-        Loop::futureTick($tickTock);
+        $contextSwitchScheduler->schedule($tickTock, $eventLoop, $this->contextSwitchInterval);
 
         // Propagate any Throwables from the event loop up to the main thread.
         $this->eventLoopThread->shout();

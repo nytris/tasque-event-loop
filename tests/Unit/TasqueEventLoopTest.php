@@ -19,6 +19,7 @@ use Nytris\Core\Package\PackageContextInterface;
 use Nytris\Core\Package\PackageInterface;
 use React\Promise\PromiseInterface;
 use Tasque\Core\Thread\Control\ExternalControlInterface;
+use Tasque\EventLoop\ContextSwitch\FutureTickScheduler;
 use Tasque\EventLoop\Library\LibraryInterface;
 use Tasque\EventLoop\TasqueEventLoop;
 use Tasque\EventLoop\TasqueEventLoopPackageInterface;
@@ -40,7 +41,12 @@ class TasqueEventLoopTest extends AbstractTestCase
 
     public function setUp(): void
     {
-        $this->eventLoopPackage = mock(TasqueEventLoopPackageInterface::class);
+        $this->eventLoopPackage = mock(TasqueEventLoopPackageInterface::class, [
+            'getContextSwitchInterval' => TasqueEventLoopPackageInterface::DEFAULT_CONTEXT_SWITCH_INTERVAL,
+            // Switch every tick to make tests deterministic.
+            'getContextSwitchScheduler' => new FutureTickScheduler(),
+            'getEventLoop' => null,
+        ]);
         $this->eventLoopPackageContext = mock(PackageContextInterface::class);
         $this->tasquePackage = mock(TasquePackageInterface::class, [
             'getSchedulerStrategy' => null,
